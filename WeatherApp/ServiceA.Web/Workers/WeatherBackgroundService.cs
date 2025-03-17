@@ -1,3 +1,4 @@
+using Messaging.Kafka.Interfaces;
 using Microsoft.Extensions.Hosting.Internal;
 using ServiceA.Web.Interfaces;
 using ServiceA.Web.Models;
@@ -8,7 +9,8 @@ public class WeatherBackgroundService(
     IWeatherCollector weatherCollector, 
     ILogger<WeatherBackgroundService> logger, 
     IHostApplicationLifetime applicationLifetime,
-    IConfiguration configuration): BackgroundService
+    IConfiguration configuration,
+    IKafkaProducer<WeatherApiResponse> producer): BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken cancellationToken)
     {
@@ -22,10 +24,7 @@ public class WeatherBackgroundService(
                     configuration["WeatherApiConfig:WeatherApiCity"]!, configuration["WeatherApiConfig:WeatherApiLang"]!);
                 
                 if (weather is not null)
-                {
-                    // TODO: Sending data...
-                    Console.WriteLine($"[{DateTime.UtcNow}] Температура: {weather.TemperatureC}°C");
-                }
+                    await producer.ProduceAsync(weather, cancellationToken);
             }
             catch (Exception ex)
             {

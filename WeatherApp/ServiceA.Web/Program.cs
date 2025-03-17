@@ -1,4 +1,6 @@
+using Messaging.Kafka.Extensions;
 using ServiceA.Web.Interfaces;
+using ServiceA.Web.Models;
 using ServiceA.Web.Services;
 using ServiceA.Web.Workers;
 
@@ -8,6 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient();
 builder.Services.AddLogging();
+builder.Services.AddKafkaProducer<WeatherApiResponse>(builder.Configuration.GetSection("Kafka"));
 builder.Services.AddSingleton<IWeatherCollector, WeatherCollector>();
 builder.Services.AddHostedService<WeatherBackgroundService>();
 
