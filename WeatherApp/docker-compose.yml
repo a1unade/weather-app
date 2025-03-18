@@ -22,6 +22,12 @@ services:
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    healthcheck:
+      test: ["CMD", "kafka-topics", "--bootstrap-server", "localhost:9092", "--list"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
     networks:
       - kafka-network
     depends_on:
@@ -50,7 +56,23 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - KAFKA_BROKER=kafka:9092
     depends_on:
-      - kafka
+      kafka:
+        condition: service_healthy
+    networks:
+      - kafka-network
+
+  weatherapp.serviceb:
+    build:
+      context: .
+      dockerfile: ServiceB.Web/Dockerfile
+    container_name: weatherapp.serviceb
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - KAFKA_BROKER=kafka:9092
+    depends_on:
+      kafka:
+        condition: service_healthy
     networks:
       - kafka-network
 

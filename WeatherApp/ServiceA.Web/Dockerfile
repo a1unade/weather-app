@@ -8,7 +8,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["ServiceA.Web/ServiceA.Web.csproj", "ServiceA.Web/"]
-COPY ["Messaging.Kafka/Messaging.Kafka.csproj", "Messaging.Kafka/"]
 RUN dotnet restore "ServiceA.Web/ServiceA.Web.csproj"
 COPY . .
 WORKDIR "/src/ServiceA.Web"

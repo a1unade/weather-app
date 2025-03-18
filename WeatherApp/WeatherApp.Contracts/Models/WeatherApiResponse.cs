@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace ServiceA.Web.Models;
+namespace WeatherApp.Contracts.Models;
 
 public class WeatherApiResponse
 {

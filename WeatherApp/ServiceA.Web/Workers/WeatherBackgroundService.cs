@@ -1,7 +1,5 @@
-using Messaging.Kafka.Interfaces;
-using Microsoft.Extensions.Hosting.Internal;
 using ServiceA.Web.Interfaces;
-using ServiceA.Web.Models;
+using WeatherApp.Contracts.Models;
 
 namespace ServiceA.Web.Workers;
 

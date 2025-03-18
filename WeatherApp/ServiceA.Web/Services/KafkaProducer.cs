@@ -1,10 +1,9 @@
 using Confluent.Kafka;
-using Messaging.Kafka.Helpers;
-using Messaging.Kafka.Interfaces;
-using Messaging.Kafka.Options;
 using Microsoft.Extensions.Options;
+using ServiceA.Web.Helpers;
+using ServiceA.Web.Interfaces;
 
-namespace Messaging.Kafka;
+namespace ServiceA.Web.Services;
 
 public class KafkaProducer<TMessage> : IKafkaProducer<TMessage>
 {
@@ -12,7 +11,7 @@ public class KafkaProducer<TMessage> : IKafkaProducer<TMessage>
     
     private readonly string _topic;
     
-    public KafkaProducer(IOptions<KafkaSettings> options)
+    public KafkaProducer(IOptions<KafkaOptions> options)
     {
         ProducerConfig config = new ProducerConfig
         {
