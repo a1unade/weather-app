@@ -16,7 +16,18 @@ public class KafkaBackgroundService(
         catch (Exception ex)
         {
             logger.LogError(ex, ex.Message);
-            applicationLifetime.StopApplication();
+        }
+        finally
+        {
+            try
+            {
+                consumer.Close();
+                applicationLifetime.StopApplication();
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Error closing consumer.");
+            }
         }
     }
 }

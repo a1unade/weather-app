@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package weather;
+
+service WeatherService {
+  rpc SetWeather (WeatherRequest) returns (WeatherResponse);
+}
+
+message WeatherRequest {
+  double temperatureC = 1;
+  double windSpeed = 2;
+  double humidity = 3;
+  double pressure = 4;
+  double dewPoint = 5;
+}
+
+message WeatherResponse {
+  string status = 1;
+}

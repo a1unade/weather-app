@@ -9,7 +9,7 @@ namespace ServiceB.Web.Services;
 
 public class KafkaConsumer: IKafkaConsumer
 {
-    private readonly IWeatherService _weatherService;
+    private readonly IWeatherSenderService _weatherSenderService;
     
     private readonly ILogger<KafkaConsumer> _logger;
     
@@ -17,7 +17,7 @@ public class KafkaConsumer: IKafkaConsumer
     
     private readonly string _topic;
     
-    public KafkaConsumer(IOptions<KafkaOptions> options, IWeatherService weatherService, ILogger<KafkaConsumer> logger)
+    public KafkaConsumer(IOptions<KafkaOptions> options, IWeatherSenderService weatherSenderService, ILogger<KafkaConsumer> logger)
     {
         ConsumerConfig config = new ConsumerConfig
         {
@@ -27,7 +27,7 @@ public class KafkaConsumer: IKafkaConsumer
         };
         
         _topic = options.Value.Topic;
-        _weatherService = weatherService;
+        _weatherSenderService = weatherSenderService;
         _logger = logger;
         
         _consumer = new ConsumerBuilder<string, WeatherApiResponse>(config)
@@ -37,9 +37,6 @@ public class KafkaConsumer: IKafkaConsumer
 
     public async Task ConsumeAsync(CancellationToken cancellationToken)
     {
-        // TODO: косяк. нужно исправить воркер сервиса А, чтоб топик создавался иначе воркер просто падает
-        await Task.Delay(TimeSpan.FromMinutes(2));
-        
         _consumer.Subscribe(_topic);
 
         try
@@ -57,7 +54,7 @@ public class KafkaConsumer: IKafkaConsumer
                     continue;
                 }
                 
-                await _weatherService.SendWeatherAsync(result.Message.Value, cancellationToken);
+                await _weatherSenderService.SendWeatherAsync(result.Message.Value, cancellationToken);
             }
         }
         catch (Exception ex)
@@ -66,4 +63,7 @@ public class KafkaConsumer: IKafkaConsumer
             throw;
         }
     }
+
+    public void Close() 
+        => _consumer.Close();
 }

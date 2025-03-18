@@ -14,7 +14,7 @@ public class WeatherBackgroundService(
     {
         using var timer = new PeriodicTimer(TimeSpan.FromMinutes(1));
 
-        while (await timer.WaitForNextTickAsync(cancellationToken))
+        while (!cancellationToken.IsCancellationRequested)
         {
             try
             {
@@ -23,6 +23,8 @@ public class WeatherBackgroundService(
                 
                 if (weather is not null)
                     await producer.ProduceAsync(weather, cancellationToken);
+                
+                await Task.Delay(TimeSpan.FromMinutes(1), cancellationToken);
             }
             catch (Exception ex)
             {
