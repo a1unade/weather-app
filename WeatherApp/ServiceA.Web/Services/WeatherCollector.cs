@@ -1,7 +1,7 @@
 using System.Runtime.Serialization;
 using System.Text.Json;
 using ServiceA.Web.Interfaces;
-using ServiceA.Web.Models;
+using WeatherApp.Contracts.Models;
 
 namespace ServiceA.Web.Services;
 

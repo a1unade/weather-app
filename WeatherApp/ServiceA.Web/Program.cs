@@ -1,8 +1,8 @@
-using Messaging.Kafka.Extensions;
+using ServiceA.Web.Extensions;
 using ServiceA.Web.Interfaces;
-using ServiceA.Web.Models;
 using ServiceA.Web.Services;
 using ServiceA.Web.Workers;
+using WeatherApp.Contracts.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,4 +1,4 @@
-using ServiceA.Web.Models;
+using WeatherApp.Contracts.Models;
 
 namespace ServiceA.Web.Interfaces;
 

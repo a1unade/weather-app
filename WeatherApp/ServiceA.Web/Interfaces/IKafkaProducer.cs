@@ -1,4 +1,4 @@
-namespace Messaging.Kafka.Interfaces;
+namespace ServiceA.Web.Interfaces;
 
 public interface IKafkaProducer<in TMessage>
 {

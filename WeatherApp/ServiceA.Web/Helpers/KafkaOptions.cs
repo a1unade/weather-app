@@ -1,6 +1,6 @@
-namespace Messaging.Kafka.Options;
+namespace ServiceA.Web.Helpers;
 
-public class KafkaSettings
+public class KafkaOptions
 {
     public string BootstrapServers { get; set; }
     
