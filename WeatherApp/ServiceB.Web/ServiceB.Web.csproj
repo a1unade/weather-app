@@ -22,11 +22,12 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\WeatherApp.Common\WeatherApp.Common.csproj" />
       <ProjectReference Include="..\WeatherApp.Contracts\WeatherApp.Contracts.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos/weather.proto" GrpcServices="Client" UseProtocGeneratedFile="false" />
+        <Protobuf Include="..\WeatherApp.Common\Protos/weather.proto" GrpcServices="Client" UseProtocGeneratedFile="false" />
     </ItemGroup>
 
     <ItemGroup>

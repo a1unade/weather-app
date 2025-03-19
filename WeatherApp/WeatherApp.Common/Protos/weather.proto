@@ -9,11 +9,10 @@ service WeatherService {
 message WeatherRequest {
   double temperatureC = 1;
   double windSpeed = 2;
-  double humidity = 3;
+  int32 humidity = 3;
   double pressure = 4;
   double dewPoint = 5;
 }
-
 message WeatherResponse {
   string status = 1;
 }
