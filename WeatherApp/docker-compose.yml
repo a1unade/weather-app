@@ -9,6 +9,7 @@ services:
       - "zookeeper-volume:/bitnami"
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+
   kafka:
     restart: always
     image: docker.io/bitnami/kafka:3.3
@@ -26,6 +27,20 @@ services:
       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
     depends_on:
       - zookeeper
+
+  postgres:
+    image: postgres:16
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=weather
+    volumes:
+      - "postgres-data:/var/lib/postgresql/data"
+
 volumes:
   kafka-volume:
   zookeeper-volume:
+  postgres-data:
